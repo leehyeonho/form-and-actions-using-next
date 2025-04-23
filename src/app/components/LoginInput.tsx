@@ -26,6 +26,8 @@ export function LoginInput({
     const errorId = `${id}-error`;
     const hasError = errors && errors.length > 0;
 
+    console.log(errors);
+
     return (
         <>
             <div className="relative">
@@ -50,9 +52,12 @@ export function LoginInput({
                 />
             </div>
             {hasError && (
+                errors.map(err => (
                 <p id={errorId} className="mt-1 text-xs text-red-600 pl-4">
-                    {errors.join(', ')}
+                    {err}
                 </p>
+                ))
+                
             )}
         </>
     );

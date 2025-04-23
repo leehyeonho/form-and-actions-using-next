@@ -30,8 +30,6 @@ export function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  console.log(state, action);
-
   return (
     <form action={action} className="w-full max-w-sm space-y-4">
       <LoginInput
@@ -42,7 +40,7 @@ export function LoginForm() {
         value={email}
         onChange={(e: { target: { value: SetStateAction<string>; }; }) => setEmail(e.target.value)}
         icon={<EmailIcon />}
-        errors={undefined}
+        errors={state?.errors?.email}
       />
       <LoginInput
         type="text"
@@ -52,7 +50,7 @@ export function LoginForm() {
         value={username}
         onChange={(e: { target: { value: SetStateAction<string>; }; }) => setUsername(e.target.value)}
         icon={<UserIcon />}
-        errors={undefined}
+        errors={state?.errors?.username}
       />
       <LoginInput
         type="password"
