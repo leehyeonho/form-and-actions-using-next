@@ -1,30 +1,32 @@
 import React, { ChangeEvent } from 'react';
 
-interface LoginInputProps {
+interface SubmitInputProps {
     type: string;
     id: string;
     name: string;
     placeholder: string;
-    value: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     icon: React.ReactNode;
     errors?: string[];
+    minLength?: number,
+    maxLength?: number,
     required?: boolean;
 }
 
-export function LoginInput({
+export function SubmitInput({
     type,
     id,
     name,
     placeholder,
-    value,
-    onChange,
     icon,
     errors,
+    minLength = 0,
+    maxLength = 100,
     required = true,
-}: LoginInputProps) {
+}: SubmitInputProps) {
     const errorId = `${id}-error`;
     const hasError = errors && errors.length > 0;
+
+    console.log(errors);
 
     return (
         <>
@@ -38,8 +40,6 @@ export function LoginInput({
                     name={name}
                     required={required}
                     placeholder={placeholder}
-                    value={value}
-                    onChange={onChange}
                     aria-describedby={hasError ? errorId : undefined}
                     className={`
             block w-full rounded-full border-0 py-3 pl-10 pr-3 text-gray-900
