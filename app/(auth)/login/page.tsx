@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormState } from 'react-dom';
-import { logIn } from '@/app/login/actions';
+import { logIn } from '@/app/(auth)/login/actions';
 import { LoginButton } from '@/components/LoginButton';
 import { SetStateAction, useEffect, useState } from 'react';
 import { LoginInput } from '@/components/LoginInput';

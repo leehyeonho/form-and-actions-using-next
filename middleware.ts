@@ -6,22 +6,22 @@ interface Routes {
 }
 
 const authUrls: Routes = {
-  "/": true,
   "/login": true,
   "/create-account": true
 }
 
-const securityUrls: Routes = {
+const privateUrls: Routes = {
+  "/": true,
   "/profile": true,
 };
 
 export async function middleware(request: NextRequest) {
   const session = await getSession();
-  const isSecurityPage = securityUrls[request.nextUrl.pathname];
+  const isSecurityPage = privateUrls[request.nextUrl.pathname];
   const isAuthPage = authUrls[request.nextUrl.pathname];
 
   if (isSecurityPage && !session.id) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (isAuthPage && session.id) {
