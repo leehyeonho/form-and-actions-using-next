@@ -1,9 +1,9 @@
 "use client";
 
-import { uploadResponse } from "@/app/(auth)/tweets/[id]/action";
 import { useFormState } from "react-dom";
 import Button from "./button";
 import Input from "@/components/input";
+import { uploadResponse } from "@/service/responseService";
 
 export default function AddResponse({ tweetId }: { tweetId: number }) {
     const [state, action] = useFormState(uploadResponse, null);
