@@ -32,7 +32,7 @@ interface PageProps {
     };
 }
 
-export default async function tweet({
+export default async function Tweet({
     params,
 }: PageProps) {
     const id = Number(params.id);
