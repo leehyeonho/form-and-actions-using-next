@@ -26,15 +26,7 @@ function formatDateTime(date: Date | undefined): string {
     return `${period} ${formattedHour}:${formattedMinutes}, ${year}년 ${month}월 ${day}일`;
 }
 
-interface PageProps {
-    params: {
-        id: string;
-    };
-}
-
-export default async function Tweet({
-    params,
-}: PageProps) {
+export default async function Tweet({ params }: { params: { id: string } }) {
     const id = Number(params.id);
     if (isNaN(id)) {
         return notFound();
