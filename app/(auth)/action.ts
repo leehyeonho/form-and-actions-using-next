@@ -2,22 +2,22 @@
 
 import db from "@/lib/db";
 import getSession from "@/lib/session";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const tweetSchema = z.object({
   tweet: z.string().min(1, { message: "트윗 내용을 입력하세요." })
 })
 
-export async function uploadTweet(_:any, formData: FormData) {
+export async function uploadTweet(_: any, formData: FormData) {
   const tweet = formData.get("tweet");
   const result = tweetSchema.safeParse({ tweet });
-
-  console.log(result);
 
   if (!result.success) {
     return result.error.flatten();
   }
-  
+
   const session = await getSession();
   if (session.id) {
     await db.tweet.create({
@@ -31,23 +31,58 @@ export async function uploadTweet(_:any, formData: FormData) {
       }
     })
   }
+
+  revalidatePath("/");
+
+  redirect("/");
 }
 
 export async function getTweetsAction(page: number, size: number) {
-    const totalCount = await db.tweet.count();
+  const totalCount = await db.tweet.count();
 
-    const tweets = await db.tweet.findMany({
-      skip: (page - 1) * size,
-      take: size,
-      include: {
-        user: {
-          select: {
-            username: true,
-            email: true
-          }
+  const tweets = await db.tweet.findMany({
+    skip: (page - 1) * size,
+    take: size,
+    include: {
+      user: {
+        select: {
+          username: true,
+          email: true
+        }
+      },
+      _count: {
+        select: {
+          likes: true,
+          Response: true
+        },
+      },
+    },
+    orderBy: {
+      created_at: 'desc',
+    }
+  });
+
+  revalidatePath("/search");
+
+  return { tweets, totalCount };
+}
+
+export async function getTweetsByKeyword(keyword: string) {
+  const tweets = await db.tweet.findMany({
+    where: {
+      tweet: {
+        contains: keyword
+      }
+    },
+    include: {
+      user: {
+        select: {
+          username: true,
+          email: true
         }
       }
-    });
+    }
+  });
 
-    return { tweets, totalCount };
+  return tweets;
 }

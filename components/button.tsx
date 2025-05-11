@@ -11,7 +11,7 @@ export default function Button({ text }: ButtonProps) {
   return (
     <button
       disabled={pending}
-      className="bg-twitter text-white px-4 py-1 rounded-full font-bold hover:bg-blue-500 transition duration-150"
+      className="w-full bg-twitter text-white font-bold py-2 px-4 rounded-full hover:bg-blue-500 transition duration-150"
     >
       {pending ? "로딩 중" : text}
     </button>

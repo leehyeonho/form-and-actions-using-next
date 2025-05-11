@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 
 interface SubmitInputProps {
     type: string;
@@ -10,6 +10,8 @@ interface SubmitInputProps {
     minLength?: number,
     maxLength?: number,
     required?: boolean;
+    value?: string;
+    className?: string;
 }
 
 export function SubmitInput({
@@ -22,6 +24,8 @@ export function SubmitInput({
     minLength = 0,
     maxLength = 100,
     required = true,
+    value= "",
+    className= "",
 }: SubmitInputProps) {
     const errorId = `${id}-error`;
     const hasError = errors && errors.length > 0;
@@ -38,14 +42,13 @@ export function SubmitInput({
                     type={type}
                     id={id}
                     name={name}
+                    defaultValue={value}
                     required={required}
                     placeholder={placeholder}
                     aria-describedby={hasError ? errorId : undefined}
-                    className={`
-            block w-full rounded-full border-0 py-3 pl-10 pr-3 text-gray-900
-            ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-            focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6
-            ${hasError ? 'ring-red-500 focus:ring-red-500' : ''}
+                    className={`block w-full pl-10 px-3 py-2 border border-gray-700 rounded-md bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-twitter
+                                ${hasError ? 'ring-red-500 focus:ring-red-500' : ''}
+                                ${className}
           `}
                 />
             </div>
