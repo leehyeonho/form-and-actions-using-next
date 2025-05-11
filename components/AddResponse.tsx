@@ -14,7 +14,7 @@ export default function AddResponse({ tweetId }: { tweetId: number }) {
                 <input className="hidden" type="hidden" name="tweetId" value={tweetId} />
                 <div className="flex space-x-3">
                     <div className="flex-1">
-                        <Input name="response" placeholder="댓글을 입력하세요" errors={state?.fieldErrors.tweet} />
+                        <Input name="response" placeholder="댓글을 입력하세요" errors={state?.fieldErrors.tweetId} />
                         <div className="flex justify-center items-center mt-2 pt-2">
                             <Button text="등록" />
                         </div>
