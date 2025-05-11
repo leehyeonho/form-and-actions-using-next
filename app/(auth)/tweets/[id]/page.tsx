@@ -26,8 +26,10 @@ function formatDateTime(date: Date | undefined): string {
     return `${period} ${formattedHour}:${formattedMinutes}, ${year}년 ${month}월 ${day}일`;
 }
 
-export default async function Tweet({ params }: { params: { id: string } }) {
-    const id = Number(params.id);
+type PageParams = Promise<{ id: string }>;
+
+export default async function Tweet({ params }: { params: PageParams }) {
+    const id = Number((await params).id);
     if (isNaN(id)) {
         return notFound();
     }
