@@ -26,11 +26,15 @@ function formatDateTime(date: Date | undefined): string {
     return `${period} ${formattedHour}:${formattedMinutes}, ${year}년 ${month}월 ${day}일`;
 }
 
+interface PageProps {
+    params: {
+        id: string;
+    };
+}
+
 export default async function tweet({
     params,
-}: {
-    params: { id: string }
-}) {
+}: PageProps) {
     const id = Number(params.id);
     if (isNaN(id)) {
         return notFound();
