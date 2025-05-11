@@ -6,9 +6,11 @@ import { User } from "@prisma/client";
 import { useFormState } from "react-dom";
 import { EmailIcon, KeyIcon, UserIcon } from "./IconBase";
 import { SubmitInput } from "./SubmitInput";
+import { useEffect, useState } from "react";
 
 export default function UpdateProfile({ user }: { user: User }) {
     const [state, action] = useFormState(updateProfile, null);
+    const [bio, setBio] = useState(user.bio ? user.bio : "");
 
     return <>
         <div className="p-4 border-b border-gray-700">
@@ -60,7 +62,16 @@ export default function UpdateProfile({ user }: { user: User }) {
                             minLength={PASSWORD_MIN_LENGTH}
                             errors={state?.fieldErrors.confirm_password}
                         />
-                        <textarea className="w-full bg-transparent text-xl p-2 resize-none placeholder-gray-500 border" value={`${user.bio? user.bio : ""}`} />
+                        <label htmlFor="bioTextarea" className="mt-3 mb-1 text-sm font-medium text-gray-300">자기소개</label>
+                        <textarea
+                            id="bioTextarea"
+                            value={bio}
+                            onChange={(e) => setBio(e.target.value)}
+                            className="w-full bg-transparent text-lg p-2 resize-none placeholder-gray-500 border border-gray-600 rounded-md focus:ring-twitter focus:border-twitter"
+                            rows={4}
+                            placeholder="자기소개를 입력하세요..."
+                        />
+                        <input type="hidden" name="bio" value={bio} />
                     </div>
                 </div>
                 <button className="mt-2 px-4 py-2 border border-gray-600 rounded-full font-semibold hover:bg-gray-800 transition duration-150 cursor-pointer">

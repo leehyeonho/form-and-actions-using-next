@@ -31,9 +31,7 @@ export async function uploadTweet(_: any, formData: FormData) {
       }
     })
   }
-
-  revalidatePath("/");
-
+  
   redirect("/");
 }
 

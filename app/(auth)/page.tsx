@@ -1,12 +1,11 @@
 'use client';
 
 import AddTweet from "@/components/AddTweet";
+import Navigation from "@/components/Navigation";
 import Pagination from "@/components/Pagination";
-import Link from "next/link";
+import TweetContent from "@/components/TweetContent";
 import { useEffect, useState } from "react";
 import { getTweetsAction } from "./action";
-import Navigation from "@/components/Navigation";
-import TweetContent from "@/components/TweetContent";
 
 const pageSize = 5;
 

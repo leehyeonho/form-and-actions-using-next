@@ -1,11 +1,11 @@
 import { uploadTweet } from "@/app/(auth)/action";
+import Input from "@/components/input";
 import { useFormState } from "react-dom";
 import Button from "./button";
-import Input from "@/components/input";
 
 export default function AddTweet() {
     const [state, action] = useFormState(uploadTweet, null);
-
+    
     return <>
         <div className="divide-y divide-gray-700 m-10">
             <div className="flex justify-center space-x-3">

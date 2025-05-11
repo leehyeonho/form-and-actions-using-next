@@ -32,10 +32,13 @@ const formSchema = z
         password: z.string().min(PASSWORD_MIN_LENGTH, { message: `패스워드는 최소 ${PASSWORD_MIN_LENGTH}자 이상을 입력해주세요.` }),
         confirm_password: z.string().min(PASSWORD_MIN_LENGTH, { message: `패스워드는 최소 ${PASSWORD_MIN_LENGTH}자 이상을 입력해주세요.` }),
     })
-    .superRefine(async ({ username }, ctx) => {
+    .superRefine(async ({ id, username }, ctx) => {
         const user = await db.user.findUnique({
             where: {
                 username,
+                NOT: {
+                    id
+                }
             },
             select: {
                 id: true,
@@ -51,10 +54,13 @@ const formSchema = z
             return z.NEVER;
         }
     })
-    .superRefine(async ({ email }, ctx) => {
+    .superRefine(async ({ id, email }, ctx) => {
         const user = await db.user.findUnique({
             where: {
                 email,
+                NOT: {
+                    id
+                }
             },
             select: {
                 id: true,
@@ -85,11 +91,12 @@ export async function getUserInfo(username: string) {
 
 export async function updateProfile(_: any, formData: FormData) {
     const user = await getUser();
+    console.log(formData);
     const data = {
         id: user.id,
         username: formData.get("username"),
         email: formData.get("email"),
-        bio: formData.get("bio"),
+        bio: formData.get("bio")?.toString() ?? "",
         password: formData.get("password"),
         confirm_password: formData.get("confirm_password"),
     };
@@ -99,6 +106,7 @@ export async function updateProfile(_: any, formData: FormData) {
         return result.error.flatten();
     } else {
         const hashedPassword = await bcrypt.hash(result.data.password, 12);
+        console.log(result.data.bio);
         const user = await db.user.update({
             where: {
                 id: result.data.id
