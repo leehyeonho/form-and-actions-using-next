@@ -42,7 +42,8 @@ export async function getTweetsAction(page: number, size: number) {
       include: {
         user: {
           select: {
-            username: true
+            username: true,
+            email: true
           }
         }
       }

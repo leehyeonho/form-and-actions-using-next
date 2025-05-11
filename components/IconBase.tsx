@@ -20,7 +20,6 @@ function IconBase({ children, className, ...props }: IconProps) {
   );
 }
 
-// 각각의 아이콘 정의
 export const EmailIcon = (props: IconProps) => (
   <IconBase {...props}>
     <path

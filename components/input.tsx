@@ -16,7 +16,7 @@ export default function Input({
       <input
         name={name}
         placeholder={placeholder}
-        className="bg-transparent rounded-md w-full h-10 focus:outline-none ring-2 focus:ring-4 transition ring-neutral-200 focus:ring-orange-500 border-none placeholder:text-neutral-400"
+        className="w-full bg-transparent text-xl p-2 outline-none resize-none placeholder-gray-500"
         {...rest}
       />
       {errors.map((error, index) => (

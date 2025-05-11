@@ -24,6 +24,8 @@ model User {
 
   tweets Tweet[]
   likes  Like[]
+
+  Response Response[]
 }
 
 model Tweet {
@@ -38,18 +40,29 @@ model Tweet {
   likes Like[]
 
   @@index([userId])
+  Response Response[]
 }
 
 model Like {
-  id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
-
   userId  Int
   user    User  @relation(fields: [userId], references: [id])
   tweetId Int
   tweet   Tweet @relation(fields: [tweetId], references: [id])
 
-  @@unique([userId, tweetId])
+  @@unique([userId, tweetId], name: "id")
   @@index([userId])
   @@index([tweetId])
+}
+
+model Response {
+  id  Int @id @default(autoincrement())
+  response String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  userId  Int
+  user    User  @relation(fields: [userId], references: [id])
+  tweetId Int
+  tweet   Tweet @relation(fields: [tweetId], references: [id])
 }
